@@ -1,9 +1,10 @@
 import { Body, Controller, Get, HttpException, HttpStatus, NotFoundException, Param, ParseIntPipe, Post, Put, Query } from "@nestjs/common";
+import { UserService } from "./user.service";
 import { CreateUserInput } from "./dtos/createUserInput.dto";
 import { UpdateUserInput } from "./dtos/updateUserInput.dto";
-import { UserService } from "./user.service";
+import { ApiTags } from "@nestjs/swagger";
 
-
+@ApiTags("Usuarios")
 @Controller("/users")
 export class UserController {
 
