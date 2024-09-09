@@ -7,8 +7,15 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   connectDatabase()
-  app.useGlobalPipes(new ValidationPipe());
-
+  app.useGlobalPipes(new ValidationPipe({
+    whitelist: true, // Remove campos não definidos no DTO
+    forbidNonWhitelisted: true, // Lança erro se houver campos desconhecidos
+    transform: true, // Transforma a payload para os tipos esperados no DTO
+    forbidUnknownValues: true, // Gera erro se algum valor estiver faltando ou desconhecido
+    skipMissingProperties: false, // Não pula validação de propriedades faltantes
+    errorHttpStatusCode: 400, // Define o código de erro como 400 (Bad Request)
+  }));
+  
   const options = new DocumentBuilder()
     .setTitle('Minha documentação')
     .setDescription('Documentação completa da api mateus-data')
