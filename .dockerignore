@@ -1,0 +1,16 @@
+# Ignora arquivos e diretórios do Git
+.git
+.gitignore
+
+# Ignora arquivos e diretórios de build e dependências do Node
+node_modules
+npm-debug.log
+yarn-error.log
+dist
+
+# Ignora arquivos temporários e de configuração do sistema
+*.log
+*.tmp
+*.swp
+.DS_Store
+.vscode
