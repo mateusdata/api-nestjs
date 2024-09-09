@@ -33,7 +33,7 @@ COPY --from=build /app/dist ./dist
 
 # Define a variável de ambiente
 ENV NODE_ENV=production
-
+RUN npx prisma generate
 # Expõe a porta em que a aplicação irá rodar
 EXPOSE 3000
 
