@@ -9,14 +9,11 @@ async function bootstrap() {
     logger: ['error', 'warn', 'log'], 
     autoFlushLogs: true
   });
+
+  
   connectDatabase()
   app.useGlobalPipes(new ValidationPipe({
-    whitelist: true, // Remove campos não definidos no DTO
-    forbidNonWhitelisted: true, // Lança erro se houver campos desconhecidos
-    transform: true, // Transforma a payload para os tipos esperados no DTO
-    forbidUnknownValues: true, // Gera erro se algum valor estiver faltando ou desconhecido
-    skipMissingProperties: false, // Não pula validação de propriedades faltantes
-    errorHttpStatusCode: 400, // Define o código de erro como 400 (Bad Request)
+   
   }));
   
   const options = new DocumentBuilder()
@@ -27,9 +24,20 @@ async function bootstrap() {
     .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, options);
-  SwaggerModule.setup('/', app, document);
-  
+  SwaggerModule.setup('/', app, document, {
+    customCss: `
+      .swagger-ui .topbar {
+        background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwG_TFnQOVq3CCRN3euHJN-moi6PiT9Uy_Fw&s') no-repeat center center;
+        background-size: contain;
+        
+        background: #892FAF
+      }
+    `,
+  });
+  connectDatabase()
+
   await app.listen(3000, () => {
+
     console.dir('servidor rodando na porta http://localhost:3000/')
   });
 }

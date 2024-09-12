@@ -15,75 +15,71 @@ datasource db {
 
 model TodoList {
   id          Int      @id @default(autoincrement())
-  title       String
-  description String
+  title       String   @unique
+  description String   
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
   @@map("tudo_list")
 }
 
-
 model User {
-  id          Int           @id @default(autoincrement())
-  login       String        @unique
-  email       String?  
-  name        String
-  password    String
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime @updatedAt
-  posts       Post[]
-  comments    Comment[]
+  userId       Int           @id @default(autoincrement())
+  login        String        @unique
+  email        String?      
+  name         String
+  password     String
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  posts        Post[]
+  comments     Comment[]
   commentLikes CommentLike[]
-  postLikes   PostLike[]
-
+  postLikes    PostLike[]
 }
 
 model Post {
-  id          Int           @id @default(autoincrement())
-  message     String
-  userId      Int
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime @updatedAt
-  user        User          @relation(fields: [userId], references: [id])
-  comments    Comment[]
-  likes       PostLike[]
-
+  postId    Int        @id @default(autoincrement())
+  message   String
+  userId    Int
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  user      User       @relation(fields: [userId], references: [userId])
+  comments  Comment[]
+  likes     PostLike[]
 }
 
 model Comment {
-  id          Int           @id @default(autoincrement())
-  message     String
-  postId      Int
-  userId      Int
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime @updatedAt
-  post        Post          @relation(fields: [postId], references: [id])
-  user        User          @relation(fields: [userId], references: [id])
-  likes       CommentLike[]
-
+  commentId Int           @id @default(autoincrement())
+  message   String
+  postId    Int
+  userId    Int
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  post      Post          @relation(fields: [postId], references: [postId])
+  user      User          @relation(fields: [userId], references: [userId])
+  likes     CommentLike[]
 }
 
 model CommentLike {
-  id          Int           @id @default(autoincrement())
-  commentId   Int
-  userId      Int
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime @updatedAt
-  comment     Comment       @relation(fields: [commentId], references: [id])
-  user        User          @relation(fields: [userId], references: [id])
+  commentLikeId Int      @id @default(autoincrement())
+  commentId     Int
+  userId        Int
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  comment       Comment  @relation(fields: [commentId], references: [commentId])
+  user          User     @relation(fields: [userId], references: [userId])
 
   @@unique([commentId, userId])
 }
 
 model PostLike {
-  id          Int           @id @default(autoincrement())
-  postId      Int
-  userId      Int
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime @updatedAt
-  post        Post          @relation(fields: [postId], references: [id])
-  user        User          @relation(fields: [userId], references: [id])
+  postLikeId Int      @id @default(autoincrement())
+  postId     Int
+  userId     Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  post       Post     @relation(fields: [postId], references: [postId])
+  user       User     @relation(fields: [userId], references: [userId])
 
   @@unique([postId, userId])
 }

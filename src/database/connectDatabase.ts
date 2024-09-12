@@ -14,6 +14,7 @@ export default async function connectDatabase() {
     console.error("Erro ao conectar com o banco de dados:", e);
   } finally {
     // Garante que a desconexão ocorra, independentemente do resultado da conexão
+    
     await prisma.$disconnect();
   }
 }

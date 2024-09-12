@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, Param, Patch, Post } from "@nestjs/commo
 import { TodoListService } from "./todolist.service";
 import { CreateTodoListDto } from "./dto/create-tudolist.dto";
 import { UpdateTodoListDto } from "./dto/update-tudolist.dto";
-import { ApiTags } from "@nestjs/swagger";
+import { ApiAcceptedResponse, ApiBody, ApiOkResponse, ApiOperation, ApiTags } from "@nestjs/swagger";
 
 
 
@@ -11,6 +11,11 @@ import { ApiTags } from "@nestjs/swagger";
 export class TodoListController {
     constructor(private readonly tudoListService: TodoListService) { }
 
+
+    @ApiOperation({ summary: 'Criar uma nova todolist' })  // Descrição do método POST
+    @ApiBody({ type: CreateTodoListDto, description: 'Body necessário para criar uma nova Todo List' }) // Detalha o corpo da requisição
+    @ApiAcceptedResponse({schema:{example:"Mateus dos santos silva"}})
+    @ApiOkResponse({ description: 'Login bem-sucedido. Retorna o token.' }) 
     @Post("")
     create(@Body() createTodoList: CreateTodoListDto) {
         return this.tudoListService.create(createTodoList);
