@@ -2,7 +2,11 @@ import { Body, Controller, Delete, Get, Param, Patch, Post } from "@nestjs/commo
 import { TodoListService } from "./todolist.service";
 import { CreateTodoListDto } from "./dto/create-tudolist.dto";
 import { UpdateTodoListDto } from "./dto/update-tudolist.dto";
+import { ApiTags } from "@nestjs/swagger";
 
+
+
+@ApiTags("Grud de todo list")
 @Controller("/todolist")
 export class TodoListController {
     constructor(private readonly tudoListService: TodoListService) { }
@@ -19,17 +23,17 @@ export class TodoListController {
 
     @Get()
     findOne(@Param("id") id: string) {
-        return this.tudoListService.findOne(id);
+        return this.tudoListService.findOne(+id);
     }
 
     @Patch()
     update(@Param("id") id: string, @Body() updateTodoListDto: UpdateTodoListDto) {
-        return this.tudoListService.update(id, updateTodoListDto);
+        return this.tudoListService.update(+id, updateTodoListDto);
     }
 
     @Delete()
     remover(@Param("id") id: string) {
-        return this.tudoListService.remover(id)
+        return this.tudoListService.remover(+id)
     }
 
 }

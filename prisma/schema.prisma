@@ -23,30 +23,67 @@ model TodoList {
   @@map("tudo_list")
 }
 
-model User {
-  user_id   Int      @id @default(autoincrement())
-  name      String
-  email     String   @unique
-  password  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  posts     Post[]
 
-  @@map("user")
+model User {
+  id          Int           @id @default(autoincrement())
+  login       String        @unique
+  email       String?  
+  name        String
+  password    String
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime @updatedAt
+  posts       Post[]
+  comments    Comment[]
+  commentLikes CommentLike[]
+  postLikes   PostLike[]
+
 }
 
 model Post {
-  post_id    Int      @id @default(autoincrement())
-  name       String
-  user_id    Int
-  autor      User     @relation(fields: [user_id], references: [user_id])
-  title      String?
-  body       String?
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  id          Int           @id @default(autoincrement())
+  message     String
+  userId      Int
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime @updatedAt
+  user        User          @relation(fields: [userId], references: [id])
+  comments    Comment[]
+  likes       PostLike[]
+
 }
 
-model HasMath {
-  id    Int    @id @default(autoincrement())
-  status Boolean
+model Comment {
+  id          Int           @id @default(autoincrement())
+  message     String
+  postId      Int
+  userId      Int
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime @updatedAt
+  post        Post          @relation(fields: [postId], references: [id])
+  user        User          @relation(fields: [userId], references: [id])
+  likes       CommentLike[]
+
+}
+
+model CommentLike {
+  id          Int           @id @default(autoincrement())
+  commentId   Int
+  userId      Int
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime @updatedAt
+  comment     Comment       @relation(fields: [commentId], references: [id])
+  user        User          @relation(fields: [userId], references: [id])
+
+  @@unique([commentId, userId])
+}
+
+model PostLike {
+  id          Int           @id @default(autoincrement())
+  postId      Int
+  userId      Int
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime @updatedAt
+  post        Post          @relation(fields: [postId], references: [id])
+  user        User          @relation(fields: [userId], references: [id])
+
+  @@unique([postId, userId])
 }

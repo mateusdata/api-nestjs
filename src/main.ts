@@ -1,11 +1,14 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
-import connectDatabase from 'prisma/connectDatabase';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import connectDatabase from './database/connectDatabase';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    logger: ['error', 'warn', 'log'], 
+    autoFlushLogs: true
+  });
   connectDatabase()
   app.useGlobalPipes(new ValidationPipe({
     whitelist: true, // Remove campos não definidos no DTO
@@ -24,10 +27,10 @@ async function bootstrap() {
     .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, options);
-  SwaggerModule.setup('docs', app, document);
+  SwaggerModule.setup('/', app, document);
   
   await app.listen(3000, () => {
-    console.log('servidor rodando na porta 3000')
+    console.dir('servidor rodando na porta http://localhost:3000/')
   });
 }
 bootstrap();
