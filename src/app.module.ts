@@ -1,6 +1,6 @@
 // src/app.module.ts
 import { Module, NestModule, MiddlewareConsumer, RequestMethod } from '@nestjs/common';
-import { APP_INTERCEPTOR } from '@nestjs/core';
+import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
 import { AuthMiddleware } from './middlewares/auth.middleware';
 import { LoggingInterceptor } from './logging.interceptor';
@@ -21,18 +21,12 @@ import { PrismaService } from './prisma.service';
       useClass: LoggingInterceptor,
     },
     JwtService,
-    PrismaService
+    PrismaService,
+    {
+      provide: APP_GUARD,
+      useClass: AuthMiddleware,
+    },
   ],
   exports: [PrismaService],
 })
-export class AppModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(AuthMiddleware)
-      .exclude(
-        { path: '/login', method: RequestMethod.ALL },
-        { path: '/', method: RequestMethod.ALL },
-      )
-      .forRoutes('*');
-  }
-}
+export class AppModule {}
