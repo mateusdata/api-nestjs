@@ -5,10 +5,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import connectDatabase from './database/connectDatabase';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, {
-    logger: ['error', 'warn', 'log'], 
-    autoFlushLogs: true
-  });
+  const app = await NestFactory.create(AppModule)
 
   
   connectDatabase()
@@ -38,7 +35,7 @@ async function bootstrap() {
 
   await app.listen(3000, () => {
 
-    console.dir('servidor rodando na porta http://localhost:3000/')
+    console.dir(`servidor rodando em ${process.env.SERVER_URL}`)
   });
 }
 bootstrap();

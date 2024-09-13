@@ -1,6 +1,6 @@
 import { IsEmail, IsNotEmpty, IsOptional, MaxLength, minLength, MinLength } from "class-validator";
 
-export class LoginDto {
+export class AuthDto {
     @IsEmail({}, { message: 'O email fornecido não é válido.' })
     @IsNotEmpty({ message: 'O email é obrigatório.' })
     email: string;

@@ -1,17 +1,21 @@
-import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-users.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from 'src/prisma.service';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
     constructor(private readonly prisma: PrismaService) { }
 
-    async create(createUser: CreateUserDto) {
-
+    async create(createUserDto: CreateUserDto) {
+        const { email,login, name, password}  = createUserDto;
+        const saltOrRounds = 10;
+        const hash = await bcrypt.hash(password, saltOrRounds); 
+        
         const existingUser = await this.prisma.user.findUnique({
             where: {
-                login: createUser.login
+                login: createUserDto.login
             }
         });
         if (existingUser) {
@@ -19,12 +23,18 @@ export class UsersService {
         }
 
         return await this.prisma.user.create({
-            data: createUser,
+            data: {
+                email: email,
+                login: login,
+                name: name,
+                password: hash
+            },
         });
     }
 
     async findAll() {
-        return this.prisma.user.findMany();
+        const users = await this.prisma.user.findMany();
+        return users.map(({ password, ...rest }) => rest);
     }
 
     async findOne(id: number) {
@@ -59,11 +69,12 @@ export class UsersService {
     }
 
     async remove(id: number) {
-        const user = await this.prisma.user.findUnique({
-            where: {
-                userId: id
-            }
-        });
+        const user = await this.prisma.user.findUnique(
+            {
+                where: {
+                    userId: id
+                }
+            });
         if (!user) {
             throw new NotFoundException("Usuario não encontrado")
         };
