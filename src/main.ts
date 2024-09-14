@@ -13,7 +13,7 @@ async function bootstrap() {
   }));
 
   const options = new DocumentBuilder()
-    .setTitle('Minha documentação')
+    .setTitle('Documentação API Papacapim')
     .setDescription('Documentação completa da api mateus-data')
     .setVersion('1.0')
     .addTag('Documentação da api')
