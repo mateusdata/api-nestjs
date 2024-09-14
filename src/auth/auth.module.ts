@@ -12,6 +12,7 @@ import { AuthMiddleware } from "src/middlewares/auth.middleware";
             secret: "123",
             signOptions: { expiresIn: '60s' },
           }),
+
     ],
     controllers: [AuthController],
     providers: [
@@ -30,6 +31,5 @@ export class AuthModule implements NestModule {
           { path: '/', method: RequestMethod.ALL },
           { path: '/users', method: RequestMethod.POST },
         )
-        .forRoutes('*');
     }
   }

@@ -9,13 +9,16 @@ export class UsersService {
     constructor(private readonly prisma: PrismaService) { }
 
     async create(createUserDto: CreateUserDto) {
-        const { email,login, name, password}  = createUserDto;
+        const { email, login, name, password } = createUserDto;
         const saltOrRounds = 10;
-        const hash = await bcrypt.hash(password, saltOrRounds); 
-        
-        const existingUser = await this.prisma.user.findUnique({
+        const hash = await bcrypt.hash(password, saltOrRounds);
+
+        const existingUser = await this.prisma.user.findFirst({
             where: {
-                login: createUserDto.login
+                OR: [
+                    { login: createUserDto.login },
+                    { email: createUserDto.email },
+                ]
             }
         });
         if (existingUser) {

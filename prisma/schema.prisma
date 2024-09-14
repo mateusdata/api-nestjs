@@ -13,6 +13,9 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+generator erd {
+  provider = "prisma-erd-generator"
+}
 
 model User {
   userId       Int           @id @default(autoincrement())

@@ -8,6 +8,7 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { PostsModule } from './posts/posts.module';
 import { PrismaService } from './prisma.service';
+import { TesteController } from './teste/teste.controller';
 
 @Module({
   imports: [
@@ -28,5 +29,6 @@ import { PrismaService } from './prisma.service';
     },
   ],
   exports: [PrismaService],
+  controllers: [TesteController],
 })
 export class AppModule {}
