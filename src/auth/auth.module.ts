@@ -10,7 +10,7 @@ import { AuthMiddleware } from "src/middlewares/auth.middleware";
         JwtModule.register({
             global: true,
             secret: "123",
-            signOptions: { expiresIn: '60s' },
+            signOptions: { expiresIn: '900s' },
           }),
 
     ],
@@ -31,5 +31,6 @@ export class AuthModule implements NestModule {
           { path: '/', method: RequestMethod.ALL },
           { path: '/users', method: RequestMethod.POST },
         )
+        .forRoutes("*")
     }
   }

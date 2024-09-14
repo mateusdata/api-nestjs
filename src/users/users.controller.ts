@@ -1,8 +1,9 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { CreateUserDto } from './dto/create-users.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+
 
 @Controller('/users')
 @ApiTags("Grud de Usuarios")
@@ -16,7 +17,6 @@ export class UsersController {
     
     return this.usersService.create(createUser)
   }
-
   @Get("")
   findAll() {
     return this.usersService.findAll()

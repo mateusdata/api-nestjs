@@ -1,14 +1,13 @@
 // src/app.module.ts
-import { Module, NestModule, MiddlewareConsumer, RequestMethod } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
 import { AuthMiddleware } from './middlewares/auth.middleware';
 import { LoggingInterceptor } from './logging.interceptor';
-import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { PostsModule } from './posts/posts.module';
 import { PrismaService } from './prisma.service';
-import { TesteController } from './teste/teste.controller';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -29,6 +28,5 @@ import { TesteController } from './teste/teste.controller';
     },
   ],
   exports: [PrismaService],
-  controllers: [TesteController],
 })
-export class AppModule {}
+export class AppModule { }

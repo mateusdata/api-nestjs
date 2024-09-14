@@ -7,21 +7,34 @@ import connectDatabase from './database/connectDatabase';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
 
-  
-  connectDatabase()
+
   app.useGlobalPipes(new ValidationPipe({
-   
+
   }));
-  
+
   const options = new DocumentBuilder()
     .setTitle('Minha documentação')
     .setDescription('Documentação completa da api mateus-data')
     .setVersion('1.0')
     .addTag('Documentação da api')
-    .addBearerAuth()
+    .addBearerAuth(
+      {
+        type: 'http',
+        scheme: 'Bearer',
+        bearerFormat: 'JWT',
+        in: 'header',
+      },
+      'token',
+    )
+    .addSecurityRequirements('token')
     .build();
+
+    
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('/', app, document, {
+    swaggerOptions: {
+      persistAuthorization: true,
+    },
     customCss: `
       .swagger-ui .topbar {
         background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwG_TFnQOVq3CCRN3euHJN-moi6PiT9Uy_Fw&s') no-repeat center center;
@@ -31,12 +44,13 @@ async function bootstrap() {
       }
     `,
   });
-  connectDatabase()
 
   await app.listen(3000, () => {
 
     console.dir(`servidor rodando em ${process.env.SERVER_URL}`)
   });
+  connectDatabase()
+
 }
 bootstrap();
 
