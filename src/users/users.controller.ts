@@ -6,8 +6,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 
 
 @Controller('/users')
-@ApiTags("Grud de Usuarios")
-
+@ApiTags("Rotas de Usuários")
 export class UsersController {
   constructor(private readonly usersService: UsersService) { }
   

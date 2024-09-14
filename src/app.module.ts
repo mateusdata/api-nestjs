@@ -8,12 +8,18 @@ import { AuthModule } from './auth/auth.module';
 import { PostsModule } from './posts/posts.module';
 import { PrismaService } from './prisma.service';
 import { UsersModule } from './users/users.module';
+import { CommentsModule } from './comments/comments.module';
+import { CommentLikeModule } from './comment-like/comment-like.module';
+import { PostLikeModule } from './post-like/post-like.module';
 
 @Module({
   imports: [
     UsersModule,
     AuthModule,
     PostsModule,
+    CommentsModule,
+    CommentLikeModule,
+    PostLikeModule,
   ],
   providers: [
     {

@@ -31,6 +31,9 @@ async function bootstrap() {
 
     
   const document = SwaggerModule.createDocument(app, options);
+  document.components.schemas = {}; 
+
+  
   SwaggerModule.setup('/', app, document, {
     swaggerOptions: {
       persistAuthorization: true,
