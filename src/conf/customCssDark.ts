@@ -1993,49 +1993,5 @@ export const customCssDark = `
             background-color: rgb(27, 29, 30);
             background-image: none;
         }
-
-        /* Override Style */
-        .vimvixen-hint {
-            background-color: #7b5300 !important;
-            border-color: #d8b013 !important;
-            color: #f3e8c8 !important;
-        }
-        ::placeholder {
-            opacity: 0.5 !important;
-        }
-        #edge-translate-panel-body,
-        .MuiTypography-body1 {
-            color: var(--darkreader-neutral-text) !important;
-        }
-        gr-main-header {
-            background-color: #0f3a48 !important;
-        }
-        .tou-z65h9k,
-        .tou-mignzq,
-        .tou-1b6i2ox,
-        .tou-lnqlqk {
-            background-color: var(--darkreader-neutral-background) !important;
-        }
-        .tou-75mvi {
-            background-color: #032029 !important;
-        }
-        .tou-ta9e87,
-        .tou-1w3fhi0,
-        .tou-1b8t2us,
-        .tou-py7lfi,
-        .tou-1lpmd9d,
-        .tou-1frrtv8,
-        .tou-17ezmgn {
-            background-color: #0a0a0a !important;
-        }
-        .tou-uknfeu {
-            background-color: #231603 !important;
-        }
-        .tou-6i3zyv {
-            background-color: #19576c !important;
-        }
-        embed[type="application/pdf"] { filter: invert(100%) contrast(90%); 
-
-        }
-}
+       
 `
