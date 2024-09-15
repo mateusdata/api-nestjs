@@ -1,26 +1,101 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
+import { PrismaService } from 'src/prisma.service';
+import { UsersService } from 'src/users/users.service';
 
 @Injectable()
 export class PostsService {
-  create(createPostDto: CreatePostDto) {
-    return 'This action adds a new post';
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly usersService: UsersService
+  ) { }
+
+  async create(createPostDto: CreatePostDto) {
+    const userExists = await this.usersService.userExists(createPostDto.userId);
+    if (!userExists) {
+      throw new NotFoundException('Usuário não encontrado');
+    }
+
+    const post = await this.prisma.post.create({
+      data: {
+        userId: createPostDto.userId,
+        message: createPostDto.message
+      }
+    });
+
+    return post;
   }
 
-  findAll() {
-    return `This action returns all posts`;
+  async findAll() {
+    return await this.prisma.post.findMany({
+      include: {
+        user: {
+          select: {
+            name: true
+          }
+        },
+        comments: {
+          select: {
+            commentId: true,
+            message: true
+          }
+        },
+        likes: true
+      }
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} post`;
+  async findOne(id: number) {
+    const post = await this.prisma.post.findUnique({
+      where: { postId: id }
+    });
+
+    if (!post) {
+      throw new NotFoundException('Post não encontrado');
+    }
+
+    return post;
   }
 
-  update(id: number, updatePostDto: UpdatePostDto) {
-    return `This action updates a #${id} post`;
+  async update(id: number, updatePostDto: UpdatePostDto) {
+    const existingPost = await this.prisma.post.findUnique({
+      where: {
+        postId: id,
+        AND: {
+          userId: updatePostDto.userId
+        }
+      }
+    });
+    if (!existingPost) {
+      throw new NotFoundException('Post não encontrado');
+    }
+
+    const userExists = await this.usersService.userExists(updatePostDto.userId);
+    if (!userExists) {
+      throw new NotFoundException('Usuário não encontrado');
+    }
+
+    const updatedPost = await this.prisma.post.update({
+      data: updatePostDto,
+      where: { postId: id }
+    });
+
+    return updatedPost;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} post`;
+  async remove(id: number) {
+    const existingPost = await this.prisma.post.findUnique({
+      where: { postId: id }
+    });
+    if (!existingPost) {
+      throw new NotFoundException('Post não encontrado');
+    }
+
+    await this.prisma.post.delete({
+      where: { postId: id }
+    });
+
+    return { message: 'Post removido' };
   }
 }

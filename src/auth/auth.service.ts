@@ -18,7 +18,7 @@ export class AuthService {
             where: { email: credentials.email }
         });
 
-        if(!user){
+        if (!user) {
             throw new NotFoundException("Usuario ou senha incorretas")
         }
         const isMatch = await bcrypt.compare(credentials.password, user.password);
@@ -30,6 +30,6 @@ export class AuthService {
         const payload = { email: credentials.email, user: user.userId }
         const token = this.Jwt.sign(payload)
 
-        return {...result, token}
+        return { ...result, token }
     }
 }

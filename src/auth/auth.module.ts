@@ -6,31 +6,31 @@ import { JwtModule, JwtService } from "@nestjs/jwt";
 import { AuthMiddleware } from "src/middlewares/auth.middleware";
 
 @Module({
-    imports:[
-        JwtModule.register({
-            global: true,
-            secret: "123",
-            signOptions: { expiresIn: '900s' },
-          }),
+  imports: [
+    JwtModule.register({
+      global: true,
+      secret: "123",
+      signOptions: { expiresIn: '15d' },
+    }),
 
-    ],
-    controllers: [AuthController],
-    providers: [
-        AuthService,
-        PrismaService,
-        
-    ],
-    exports: [AuthService],
+  ],
+  controllers: [AuthController],
+  providers: [
+    AuthService,
+    PrismaService,
+
+  ],
+  exports: [AuthService],
 })
 export class AuthModule implements NestModule {
-    configure(consumer: MiddlewareConsumer) {
-      consumer
-        .apply(AuthMiddleware)
-        .exclude(
-          { path: '/login', method: RequestMethod.ALL },
-          { path: '/', method: RequestMethod.ALL },
-          { path: '/users', method: RequestMethod.POST },
-        )
-        .forRoutes("*")
-    }
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(AuthMiddleware)
+      .exclude(
+        { path: '/login', method: RequestMethod.ALL },
+        { path: '/', method: RequestMethod.ALL },
+        { path: '/users', method: RequestMethod.POST },
+      )
+      .forRoutes("*")
   }
+}
