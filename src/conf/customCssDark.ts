@@ -3,8 +3,8 @@ export const customCssDark = `
         .swagger-ui .models {
             display: none;
         }
-        html {
-            background-color: #181a1b !important;
+        .swagger-ui {
+            background-color: #121214; 
         }
         html {
             color-scheme: dark !important;
@@ -1886,7 +1886,7 @@ export const customCssDark = `
             color: rgb(152, 143, 129);
         }
         .swagger-ui .topbar {
-            background-color: #09090B;
+            background-color: #09090A   ;
         }
         .swagger-ui .topbar a {
             color: rgb(232, 230, 227); text-decoration-color: currentcolor; 
