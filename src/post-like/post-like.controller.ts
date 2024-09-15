@@ -5,9 +5,9 @@ import { UpdatePostLikeDto } from './dto/update-post-like.dto';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags("Rota de post like")
-@Controller('post-like')
+@Controller('/post-like')
 export class PostLikeController {
-  constructor(private readonly postLikeService: PostLikeService) {}
+  constructor(private readonly postLikeService: PostLikeService) { }
 
   @Post()
   create(@Body() createPostLikeDto: CreatePostLikeDto) {

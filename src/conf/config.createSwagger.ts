@@ -1,7 +1,7 @@
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 
-export async function createSwagger(app:any) {
-    const options = new DocumentBuilder()
+export async function createSwagger(app: any) {
+  const options = new DocumentBuilder()
     .setTitle('Documentação API Papacapim')
     .setDescription('Documentação completa da api mateus-data')
     .setVersion('1.0')
@@ -18,11 +18,9 @@ export async function createSwagger(app:any) {
     .addSecurityRequirements('token')
     .build();
 
-    
-  const document = SwaggerModule.createDocument(app, options);
-  document.components.schemas = {}; 
 
-  
+  const document = SwaggerModule.createDocument(app, options);
+
   SwaggerModule.setup('/', app, document, {
     swaggerOptions: {
       persistAuthorization: true,
@@ -34,6 +32,10 @@ export async function createSwagger(app:any) {
         
         background: #892FAF
       }
+        .swagger-ui .models {
+        display: none;
+      }
+    
     `,
   });
 }

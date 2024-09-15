@@ -5,13 +5,13 @@ import { Request, Response, NextFunction } from 'express';
 
 @Injectable()
 export class AuthMiddleware implements NestMiddleware {
-  constructor(private readonly jwtService: JwtService) {}
+  constructor(private readonly jwtService: JwtService) { }
 
   async use(req: Request, res: Response, next: NextFunction) {
     // Obtém o cabeçalho de autorização
     const authHeader = req.headers.authorization;
-    console.log(authHeader);
-    
+    // console.log(authHeader);
+
     if (!authHeader) {
       throw new UnauthorizedException('No authorization header provided');
     }
@@ -30,7 +30,7 @@ export class AuthMiddleware implements NestMiddleware {
         // Se necessário, você pode adicionar o payload ao request
         req['user'] = payload;
 
-        console.log('Token verificado com sucesso:', payload);
+
         next();
       }
     } catch (error) {

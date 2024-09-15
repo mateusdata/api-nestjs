@@ -1,9 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { CreatePostLikeDto } from './dto/create-post-like.dto';
 import { UpdatePostLikeDto } from './dto/update-post-like.dto';
+import { PrismaService } from '../prisma.service';
 
 @Injectable()
 export class PostLikeService {
+
+  constructor(private readonly prisma: PrismaService) { }
   create(createPostLikeDto: CreatePostLikeDto) {
     return 'This action adds a new postLike';
   }
