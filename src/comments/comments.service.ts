@@ -36,14 +36,47 @@ export class CommentsService {
   }
 
   async findOne(id: number) {
+    throw new NotImplementedException('Função findOne ainda não implementada.');
+
     return `This action returns a #${id} comment`;
   }
 
   async update(id: number, updateCommentDto: UpdateCommentDto) {
-    return `This action updates a #${id} comment`;
+    const commentExisting = await this.prisma.comment.findFirst({
+      where: {
+        commentId: id,
+        userId: updateCommentDto.userId,
+        postId: updateCommentDto.postId
+      }
+    })
+    if (!commentExisting) {
+      throw new NotFoundException("Comentario não encontrado para esse usuario")
+    }
+
+    const comment = this.prisma.comment.update({
+      data: updateCommentDto,
+      where: {
+        commentId: id
+      }
+    })
+    return comment;
   }
 
   async remove(id: number) {
-    return `This action removes a #${id} comment`;
+    const existingComment = await this.prisma.comment.findUnique({
+      where: {
+        commentId: id
+      }
+    });
+
+    if (!existingComment) {
+      throw new NotFoundException("Commentario não encontrado")
+    }
+    const comment = await this.prisma.comment.delete({
+      where: {
+        commentId: id
+      }
+    })
+    return null
   }
 }

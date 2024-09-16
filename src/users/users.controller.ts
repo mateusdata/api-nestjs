@@ -9,11 +9,11 @@ import { UpdateUserDto } from './dto/update-user.dto';
 @ApiTags("Rotas de Usuários")
 export class UsersController {
   constructor(private readonly usersService: UsersService) { }
-  
+
 
   @Post("")
   create(@Body() createUser: CreateUserDto) {
-    
+
     return this.usersService.create(createUser)
   }
   @Get("")
@@ -32,7 +32,7 @@ export class UsersController {
   }
 
   @Delete(":id")
-  @HttpCode(HttpStatus.NO_CONTENT) 
+  @HttpCode(HttpStatus.NO_CONTENT)
   remove(@Param("id") id: string) {
     return this.usersService.remove(+id)
   }

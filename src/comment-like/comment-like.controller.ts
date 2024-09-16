@@ -1,13 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus } from '@nestjs/common';
 import { CommentLikeService } from './comment-like.service';
 import { CreateCommentLikeDto } from './dto/create-comment-like.dto';
 import { UpdateCommentLikeDto } from './dto/update-comment-like.dto';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags("Rota de commentarios likes")
-@Controller('comment-like')
+@Controller('/commentlike')
 export class CommentLikeController {
-  constructor(private readonly commentLikeService: CommentLikeService) {}
+  constructor(private readonly commentLikeService: CommentLikeService) { }
 
   @Post()
   create(@Body() createCommentLikeDto: CreateCommentLikeDto) {
@@ -29,6 +29,7 @@ export class CommentLikeController {
     return this.commentLikeService.update(+id, updateCommentLikeDto);
   }
 
+  @HttpCode(HttpStatus.NO_CONTENT)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.commentLikeService.remove(+id);

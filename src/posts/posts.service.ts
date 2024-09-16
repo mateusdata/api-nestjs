@@ -30,18 +30,33 @@ export class PostsService {
   async findAll() {
     return await this.prisma.post.findMany({
       include: {
+
         user: {
           select: {
-            name: true
+            name: true,
           }
         },
         comments: {
           select: {
             commentId: true,
-            message: true
-          }
+            message: true,
+            likes: true,
+            _count: {
+              select: {
+                likes: true
+              }
+            }
+          },
+
         },
-        likes: true
+
+        likes: true,
+        _count: {
+          select: {
+            likes: true,
+            comments: true
+          }
+        }
       }
     });
   }
@@ -96,6 +111,6 @@ export class PostsService {
       where: { postId: id }
     });
 
-    return { message: 'Post removido' };
+    return null;
   }
 }

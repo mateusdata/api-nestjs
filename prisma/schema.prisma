@@ -62,11 +62,6 @@ model CommentLike {
   @@unique([commentId, userId])
 }
 
-model Teste {
-  id      Int    @id @default(autoincrement())
-  message String
-}
-
 model PostLike {
   postLikeId Int      @id @default(autoincrement())
   postId     Int

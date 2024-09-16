@@ -1,11 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus } from '@nestjs/common';
 import { PostLikeService } from './post-like.service';
 import { CreatePostLikeDto } from './dto/create-post-like.dto';
 import { UpdatePostLikeDto } from './dto/update-post-like.dto';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags("Rota de post like")
-@Controller('/post-like')
+@Controller('/postlike')
 export class PostLikeController {
   constructor(private readonly postLikeService: PostLikeService) { }
 
@@ -29,6 +29,7 @@ export class PostLikeController {
     return this.postLikeService.update(+id, updatePostLikeDto);
   }
 
+  @HttpCode(HttpStatus.NO_CONTENT)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.postLikeService.remove(+id);
