@@ -12,6 +12,7 @@ import { CommentsModule } from './comments/comments.module';
 import { CommentLikeModule } from './comment-like/comment-like.module';
 import { PostLikeModule } from './post-like/post-like.module';
 import { ChatModule } from './chat/chat.module';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 
 @Module({
   imports: [
@@ -22,11 +23,19 @@ import { ChatModule } from './chat/chat.module';
     CommentLikeModule,
     PostLikeModule,
     ChatModule,
+    ThrottlerModule.forRoot([{
+      ttl: 60000,
+      limit: 100
+    }])
   ],
   providers: [
     {
       provide: APP_INTERCEPTOR,
       useClass: LoggingInterceptor,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard
     },
     JwtService,
     PrismaService,
