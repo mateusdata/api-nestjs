@@ -29,8 +29,10 @@ export class PostsService {
 
   async findAll() {
     return await this.prisma.post.findMany({
+      orderBy: {
+        updatedAt: "desc"
+      },
       include: {
-
         user: {
           select: {
             name: true,
@@ -41,13 +43,20 @@ export class PostsService {
             commentId: true,
             message: true,
             likes: true,
+            user: {
+              select: {
+                name: true
+              }
+            },
             _count: {
               select: {
                 likes: true
               }
             }
           },
-
+          orderBy: {
+            updatedAt: "desc"
+          }
         },
 
         likes: true,
