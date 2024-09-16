@@ -11,6 +11,7 @@ import { UsersModule } from './users/users.module';
 import { CommentsModule } from './comments/comments.module';
 import { CommentLikeModule } from './comment-like/comment-like.module';
 import { PostLikeModule } from './post-like/post-like.module';
+import { ChatModule } from './chat/chat.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { PostLikeModule } from './post-like/post-like.module';
     CommentsModule,
     CommentLikeModule,
     PostLikeModule,
+    ChatModule,
   ],
   providers: [
     {
