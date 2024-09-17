@@ -11,8 +11,8 @@ import { UsersModule } from './users/users.module';
 import { CommentsModule } from './comments/comments.module';
 import { CommentLikeModule } from './comment-like/comment-like.module';
 import { PostLikeModule } from './post-like/post-like.module';
-import { ChatModule } from './chat/chat.module';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { PostsSocketModule } from './posts-socket/posts-socket.module';
 
 @Module({
   imports: [
@@ -22,11 +22,12 @@ import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
     CommentsModule,
     CommentLikeModule,
     PostLikeModule,
-    ChatModule,
     ThrottlerModule.forRoot([{
       ttl: 60000,
       limit: 100
-    }])
+    }]),
+    PostsSocketModule,
+
   ],
   providers: [
     {

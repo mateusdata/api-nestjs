@@ -1,12 +1,17 @@
+import { PostsSocketGateway } from './../posts-socket/posts-socket.gateway';
 import { ConflictException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-users.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from '../prisma.service';
 import * as bcrypt from 'bcrypt';
+import { PostsSocketService } from 'src/posts-socket/posts-socket.service';
 
 @Injectable()
 export class UsersService {
-    constructor(private readonly prisma: PrismaService) { }
+    constructor(
+        private readonly prisma: PrismaService,
+        // private readonly postsSocketGateway: PostsSocketService
+    ) { }
 
     async create(createUserDto: CreateUserDto) {
         const { email, login, name, password } = createUserDto;
@@ -24,8 +29,7 @@ export class UsersService {
         if (existingUser) {
             throw new ConflictException("Usuario já existe")
         }
-
-        return await this.prisma.user.create({
+        const user = await this.prisma.user.create({
             data: {
                 email: email,
                 login: login,
@@ -33,6 +37,8 @@ export class UsersService {
                 password: hash
             },
         });
+
+        return user
     }
 
     async findAll() {

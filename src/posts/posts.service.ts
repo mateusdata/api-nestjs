@@ -28,15 +28,11 @@ export class PostsService {
   }
 
   async findAll() {
-    return await this.prisma.post.findMany({
-      orderBy: {
-        updatedAt: "desc"
-      },
+    const posts = await this.prisma.post.findMany({
+      orderBy: { updatedAt: "desc" },
       include: {
         user: {
-          select: {
-            name: true,
-          }
+          select: { name: true }
         },
         comments: {
           select: {
@@ -44,19 +40,13 @@ export class PostsService {
             message: true,
             likes: true,
             user: {
-              select: {
-                name: true
-              }
+              select: { name: true }
             },
             _count: {
-              select: {
-                likes: true
-              }
+              select: { likes: true }
             }
           },
-          orderBy: {
-            updatedAt: "desc"
-          }
+          orderBy: { updatedAt: "desc" }
         },
 
         likes: true,
@@ -68,6 +58,9 @@ export class PostsService {
         }
       }
     });
+
+    return posts
+
   }
 
   async findOne(id: number) {

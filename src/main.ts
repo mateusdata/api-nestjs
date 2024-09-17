@@ -4,6 +4,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import connectDatabase from './database/connectDatabase';
 import { createSwagger } from './conf/config.createSwagger';
+import { WsAdapter } from '@nestjs/platform-ws';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -11,6 +12,7 @@ async function bootstrap() {
   });
   app.useGlobalPipes(new ValidationPipe());
   createSwagger(app)
+  app.useWebSocketAdapter(new WsAdapter(app));
 
 
   connectDatabase()
