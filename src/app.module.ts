@@ -14,6 +14,7 @@ import { PostLikeModule } from './post-like/post-like.module';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { PostsSocketModule } from './posts-socket/posts-socket.module';
 import { PrismaModule } from './prisma/prisma.module';
+import { FollowersModule } from './followers/followers.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { PrismaModule } from './prisma/prisma.module';
     }]),
     PostsSocketModule,
     PrismaModule,
+    FollowersModule,
 
   ],
   providers: [
