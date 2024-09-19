@@ -5,6 +5,8 @@ export class CreateCommentLikeDto {
     @ApiProperty()
     @IsInt({ message: "commentId tem que ser um numero" })
     @IsNotEmpty({ message: "commentId  é obrigatorio" })
+    
+    @ApiProperty()
     commentId: number;
     @IsInt({ message: "userId tem que ser um numero" })
     @IsNotEmpty({ message: "userId  é obrigatorio" })

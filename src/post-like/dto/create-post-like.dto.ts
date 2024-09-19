@@ -6,6 +6,8 @@ export class CreatePostLikeDto {
     @IsInt({ message: "Postid tem que ser um numero" })
     @IsNotEmpty({ message: "Postid  é obrigatorio" })
     postId: number;
+    
+    @ApiProperty()
     @IsInt({ message: "userId tem que ser um numero" })
     @IsNotEmpty({ message: "userId  é obrigatorio" })
     userId: number;
