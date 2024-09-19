@@ -6,13 +6,14 @@ import { AuthMiddleware } from './middlewares/auth.middleware';
 import { LoggingInterceptor } from './logging.interceptor';
 import { AuthModule } from './auth/auth.module';
 import { PostsModule } from './posts/posts.module';
-import { PrismaService } from './prisma.service';
+import { PrismaService } from './prisma/prisma.service';
 import { UsersModule } from './users/users.module';
 import { CommentsModule } from './comments/comments.module';
 import { CommentLikeModule } from './comment-like/comment-like.module';
 import { PostLikeModule } from './post-like/post-like.module';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { PostsSocketModule } from './posts-socket/posts-socket.module';
+import { PrismaModule } from './prisma/prisma.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { PostsSocketModule } from './posts-socket/posts-socket.module';
       limit: 100
     }]),
     PostsSocketModule,
+    PrismaModule,
 
   ],
   providers: [

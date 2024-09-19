@@ -2,7 +2,7 @@ import { PostsSocketGateway } from './../posts-socket/posts-socket.gateway';
 import { ConflictException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-users.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { PrismaService } from '../prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 import * as bcrypt from 'bcrypt';
 import { PostsSocketService } from 'src/posts-socket/posts-socket.service';
 

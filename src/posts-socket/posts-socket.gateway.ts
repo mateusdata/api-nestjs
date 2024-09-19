@@ -10,9 +10,18 @@ export class PostsSocketGateway implements OnGatewayConnection, OnGatewayDisconn
   @WebSocketServer() server: Server
   async handleConnection(client: WebSocket, ...args: any[]) {
 
-    const posts = await this.postsSocketService.findAll()
-    client.send(JSON.stringify(posts))
+    const getPosts = async () => {
+      const posts = await this.postsSocketService.findAll();
+      client.send(JSON.stringify(posts))
+    }
+    const interval = setInterval(getPosts, 3000);
+    client.onclose = () => {
+      console.log("Cliente desconectado");
+      clearInterval(interval)
+    }
   }
+
+
   handleDisconnect(client: any) {
 
   }
