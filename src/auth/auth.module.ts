@@ -10,7 +10,7 @@ import { AuthMiddleware } from "src/middlewares/auth.middleware";
     JwtModule.register({
       global: true,
       secret: "123",
-      signOptions: { expiresIn: '15d' },
+      signOptions: { expiresIn: '98d' },
     }),
 
   ],
